@@ -3,10 +3,18 @@ import { RouterLink, RouterView, useRoute } from 'vue-router'
 import { Icon } from '@iconify/vue'
 
 import { computed } from 'vue'
+import BaseIcon from './components/BaseIcon.vue'
 
 const route = useRoute()
 
 const isHomePage = computed(() => route.path === '/')
+
+const propsObject = {
+  source: 'custom',
+  name: 'IconMountain',
+  width: 24,
+  height: 24,
+}
 </script>
 
 <template>
@@ -17,7 +25,7 @@ const isHomePage = computed(() => route.path === '/')
     >
       <div class="navbar-start">
         <RouterLink to="/" class="btn btn-ghost text-xl font-bold text-primary">
-          <Icon icon="lucide:target" width="24" height="24" />
+          <BaseIcon v-bind="propsObject"></BaseIcon>
           Point of Vue
         </RouterLink>
       </div>
