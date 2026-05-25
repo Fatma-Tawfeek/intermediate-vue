@@ -3,14 +3,13 @@
     <label class="label" :for="id">
       <span class="label-text font-medium">{{ label }}</span>
     </label>
-    <p>{{ model }}</p>
-    <input
+    <textarea
       :id="id"
-      class="input input-bordered w-full"
-      type="text"
+      class="textarea textarea-bordered w-full"
+      rows="3"
       v-model="model"
       v-bind="$attrs"
-    />
+    ></textarea>
   </div>
 </template>
 
@@ -18,6 +17,7 @@
 defineOptions({
   inheritAttrs: false,
 })
+
 defineProps({
   id: {
     type: String,
@@ -25,11 +25,11 @@ defineProps({
   },
   label: {
     type: String,
+    default: 'Description',
     required: true,
   },
 })
-
-const model = defineModel()
+const model = defineModel<string>()
 </script>
 
 <style scoped></style>
