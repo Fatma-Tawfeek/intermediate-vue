@@ -5,6 +5,7 @@ import { Icon } from '@iconify/vue'
 import { useTaskStore } from '@/stores/taskStore'
 import WeekFormModal from '../components/WeekFormModal.vue'
 import DeleteConfirmModal from '../components/DeleteConfirmModal.vue'
+import NewPlannerCard from '../components/NewPlannerCard.vue'
 import type { Task, Week } from '../types'
 
 // Router setup
@@ -571,53 +572,11 @@ const formatDateRange = (startDate: string, endDate: string) => {
             </div>
           </div>
 
-          <div v-if="selectedWeekTasks.length > 0" class="border-t border-base-300 pt-4">
-            <div class="space-y-2">
-              <div
-                v-for="(task, index) in selectedWeekTasks"
-                :key="task.id"
-                class="flex items-center gap-2 text-sm"
-                :class="{ hidden: !isTaskListExpanded && index >= 3 }"
-              >
-                <Icon
-                  :icon="
-                    task.status === 'completed'
-                      ? 'lucide:check-circle'
-                      : task.status === 'in_progress'
-                        ? 'lucide:play-circle'
-                        : 'lucide:circle'
-                  "
-                  width="14"
-                  height="14"
-                  :class="{
-                    'text-success': task.status === 'completed',
-                    'text-warning': task.status === 'in_progress',
-                    'text-base-content/40': task.status === 'not_started',
-                  }"
-                />
-                <span class="flex-1 text-base-content">{{ task.title }}</span>
-                <span class="text-xs text-base-content/60">
-                  {{ formatTime(task.actualMinutes) }}/{{ formatTime(task.estimatedMinutes) }}
-                </span>
-              </div>
-
-              <button
-                v-if="selectedWeekTasks.length > 3"
-                @click="toggleTaskList"
-                class="btn btn-ghost btn-sm w-full gap-2 mt-2"
-              >
-                <span v-if="!isTaskListExpanded">
-                  +{{ selectedWeekTasks.length - 3 }} more tasks
-                </span>
-                <span v-else>Show less</span>
-                <Icon
-                  :icon="isTaskListExpanded ? 'lucide:chevron-up' : 'lucide:chevron-down'"
-                  width="14"
-                  height="14"
-                />
-              </button>
-            </div>
-          </div>
+          <NewPlannerCard :taskList="selectedWeekTasks" :isExpanded="isTaskListExpanded">
+            <template #taskList="{ taskList, isExpanded }">
+              <pre>{{ taskList }}</pre>
+            </template>
+          </NewPlannerCard>
         </div>
       </div>
     </div>
